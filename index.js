@@ -5,13 +5,14 @@ import cors from "cors";
 
 
 const app=express();
-// me llamo  a la funcion express que me va 
+// me llamo  a la funcion express 
 
 
 // la aplicacion necesita escuchar un puerto particular
 const port=3000;
 // y tmb necesita hostname
 const hostname="localhost";
+
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 app.use(cors());

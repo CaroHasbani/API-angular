@@ -1,7 +1,7 @@
 // vamos  a hacer la parte de rutas
 import { getTest } from "./controllers/test.controllers.js"
 import { addToCart, clearCart, getCart, removeFromCart } from "./controllers/cart.controller.js";
-import { addUser, getUsers, removeUser, validateCredentials } from "./controllers/login.controller.js";
+import { addUser, getUsers, removeUser, updateUser, validateCredentials } from "./controllers/login.controller.js";
 // importo la jwt
 import  jwt  from "jsonwebtoken";
 // necesito la clave
@@ -22,6 +22,7 @@ export const routes=(app)=>{
     app.route("/api/login").get(getUsers);
     app.route("/api/login/add").post(addUser);
     app.route("/api/login").delete(removeUser);
+    app.route("/api/login").put(updateUser);
 
 }
 
