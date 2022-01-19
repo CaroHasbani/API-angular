@@ -13,39 +13,42 @@ export const routes=(app)=>{
     // Atrapa todas las rutas que sean 
     app.route("/api/test").get(getTest);
     // agrego un nuevo endpoint y vinculo la funcion 
-    app.route("/api/cart").get(getCart);
-    app.route("/api/cart").post(addToCart);
-    app.route("/api/cart").delete(removeFromCart);
-    app.route("/api/cart/clear").get(clearCart);
+    app.route("/api/cart").get(checkToken, getCart);
+    app.route("/api/cart").post(checkToken, addToCart);
+    app.route("/api/cart").delete(checkToken, removeFromCart);
+    app.route("/api/cart/clear").get(checkToken, clearCart);
     // para el login
-    app.route("/api/login").post(validateCredentials);
-    app.route("/api/login").get(getUsers);
-    app.route("/api/login/add").post(addUser);
-    app.route("/api/login").delete(removeUser);
-    app.route("/api/login").put(updateUser);
+    app.route("/api/login").post( validateCredentials);
+    app.route("/api/login").get( getUsers);
+    app.route("/api/login/add").post(checkToken, addUser);
+    app.route("/api/login").delete(checkToken, removeUser);
+    app.route("/api/login").put(checkToken, updateUser);
 
 }
 
-// const checkToken = express.Router(); 
-// checkToken.use((req, res, next) => {
-//     const token = req.headers['Authorization'];
-	
-//     if (token) {
-//       jwt.verify(token, SECRET_KEY, (err, decoded) => {      
-//         if (err) {
-//             return res.json({ 
-//                 status: 'NOK',
-//                 mensaje: 'Token inválido' 
-//             });    
-//         } else {
-//           req.decoded = decoded;    
-//           next();
-//         }
-//       });
-//     } else {
-//       res.send({ 
-//         status: 'NOK',
-//         mensaje: 'Token no provisto' 
-//       });
-//     }
-//  });
+const checkToken = express.Router();  
+checkToken.use((req, res, next) => {
+
+    let token = req.headers['authorization'];
+    token = token.replace('Bearer ', '')
+
+    if (token) {
+        jwt.verify(token, SECRET_KEY, (err, decoded) => {
+            if (err) {
+                return res.json({
+                    status: 'NOT - OK',
+                    mensaje: 'Invalid token'
+                });
+            } else {
+               
+                req.decoded = decoded;    
+                next();
+            }
+        });
+    } else {
+        res.send({
+            status: 'NOT - OK',
+            mensaje: 'Token not given'
+        });
+    }
+});
