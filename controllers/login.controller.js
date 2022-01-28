@@ -1,6 +1,4 @@
-// importo la jwt
 import jwt from "jsonwebtoken";
-// necesito la clave
 import { SECRET_KEY } from "../config/config.js";
 // defino un array con usuarios para poder empezar a utilizar la aplicación
 const arrayUser = [
@@ -56,10 +54,7 @@ export const validateCredentials = (req, res) => {
 // metodo post
 export const addUser = (req, res) => {
   const userToAdd = req.body;
-  // eso me trae el json
-  // lo pusheo
   if (arrayUser.findIndex((user) => user.name === userToAdd.name) < 0) {
-    // if (arrayUser.findIndex(user=> user.id === userToAdd.id)<0){
     arrayUser.push(userToAdd);
     res.send({
       status: "OK",
@@ -74,13 +69,9 @@ export const addUser = (req, res) => {
 };
 
 // metodo delete
-
 export const removeUser = (req, res) => {
   const name = req.query.name;
-  //  const id= Number(req.query.id);
-
   const indexToRemove = arrayUser.findIndex((user) => user.name === name);
-  // const indexToRemove =  arrayUser.findIndex(user=>user.id===id);
   if (indexToRemove >= 0) {
     arrayUser.splice(indexToRemove, 1);
     res.send({
@@ -89,7 +80,6 @@ export const removeUser = (req, res) => {
     });
   } else {
     res.send({
-      // status: 'Cannot find id',
       status: "Cannot find name",
       arrayUser,
     });
@@ -99,6 +89,7 @@ export const removeUser = (req, res) => {
 // metodo put
 export const updateUser = (req, res) => {
   const userToUpdate = req.body;
+  // const index = arrayUser.findIndex((user) => user.name === userToUpdate.name);
   const index = arrayUser.findIndex((user) => user.id === userToUpdate.id);
   if (index >= 0) {
     arrayUser[index] = userToUpdate;
@@ -109,6 +100,7 @@ export const updateUser = (req, res) => {
   } else {
     res.send({
       status: " Cannot find id",
+      // status: "Cannot find name",
       arrayUser,
     });
   }
