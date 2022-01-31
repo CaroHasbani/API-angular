@@ -13,10 +13,6 @@ export const routes=(app)=>{
     app.route("/api/cart").post(checkToken, addToCart);
     app.route("/api/cart").delete(checkToken, removeFromCart);
     app.route("/api/cart/clear").get(checkToken, clearCart);
-    // app.route("/api/cart").get( getCart);
-    // app.route("/api/cart").post( addToCart);
-    // app.route("/api/cart").delete( removeFromCart);
-    // app.route("/api/cart/clear").get( clearCart);
     // para el login
     app.route("/api/login").post( validateCredentials);
     app.route("/api/login").get( getUsers);
@@ -30,8 +26,9 @@ const checkToken = express.Router();
 checkToken.use((req, res, next) => {
 
     let token = req.headers['authorization'];
+    console.log(token);
     token = token.replace('Bearer ', '')
-
+    console.log(token);
     if (token) {
         jwt.verify(token, SECRET_KEY, (err, decoded) => {
             if (err) {

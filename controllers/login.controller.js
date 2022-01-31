@@ -3,14 +3,12 @@ import { SECRET_KEY } from "../config/config.js";
 // defino un array con usuarios para poder empezar a utilizar la aplicación
 const arrayUser = [
   {
-    id: "00",
     email: "admin@gmail.com",
     name: "Administrador",
     password: "12345678",
     role: "admin",
   },
   {
-    id: "000",
     email: "user@gmail.com",
     name: "carolina",
     password: "12345678",
@@ -32,7 +30,6 @@ export const validateCredentials = (req, res) => {
 
   if (indexUser >= 0) {
     const payload = {
-      id: arrayUser[indexUser].id,
       email: arrayUser[indexUser].email,
       name: arrayUser[indexUser].name,
       password: arrayUser[indexUser].password,
@@ -89,8 +86,7 @@ export const removeUser = (req, res) => {
 // metodo put
 export const updateUser = (req, res) => {
   const userToUpdate = req.body;
-  // const index = arrayUser.findIndex((user) => user.name === userToUpdate.name);
-  const index = arrayUser.findIndex((user) => user.id === userToUpdate.id);
+   const index = arrayUser.findIndex((user) => user.name === userToUpdate.name);
   if (index >= 0) {
     arrayUser[index] = userToUpdate;
     res.send({
@@ -99,8 +95,7 @@ export const updateUser = (req, res) => {
     });
   } else {
     res.send({
-      status: " Cannot find id",
-      // status: "Cannot find name",
+       status: "Cannot find name",
       arrayUser,
     });
   }
