@@ -8,12 +8,12 @@ export const addToCart=(req,res)=>{
     if (cartContent.findIndex(movie=> movie.id === itemToAdd.id)<0){
         cartContent.push(itemToAdd);
         res.send({
-            status:"ok",
+            status:"added",
             cartContent
         })
     } else{
         res.send({
-            status:" not ok",
+            status:" not added",
             cartContent
         })
     }

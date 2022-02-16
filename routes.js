@@ -37,7 +37,6 @@ checkToken.use((req, res, next) => {
                     mensaje: 'Invalid token'
                 });
             } else {
-               
                 req.decoded = decoded;    
                 next();
             }
